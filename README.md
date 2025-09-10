@@ -6,10 +6,14 @@
 
 Generates alias pages for redirecting to posts, pages or URL.
 
+## About This Fork
+
+The difference from the original hexo-generator-alias project is using [url_for](https://hexo.io/docs/helpers#url-for) call instead of [full_url_for](https://hexo.io/docs/helpers#full-url-for).
+
 ## Install
 
 ``` bash
-$ npm install hexo-generator-alias --save
+$ npm install git+https://github.com/optinsoft/hexo-generator-alias.git --save
 ```
 
 - Hexo 3 & 4: >= 1.0
