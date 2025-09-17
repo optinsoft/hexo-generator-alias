@@ -1,8 +1,10 @@
 'use strict';
 
 require('chai').should();
+const expect = require('chai').expect;
 const Hexo = require('hexo');
-const { full_url_for } = require('hexo-util');
+//const { full_url_for } = require('hexo-util');
+const { url_for } = require('hexo-util');
 
 describe('hexo-generator-alias', () => {
   describe('alias', () => {
@@ -136,7 +138,9 @@ describe('hexo-generator-alias', () => {
       const result = generator(hexo.locals.toObject());
 
       result[0].path.should.eql('lorem/index.html');
-      result[0].data.should.include(hexo.config.url + '/lorem/classes/Hexo.html');
+      //result[0].data.should.include(hexo.config.url + '/lorem/classes/Hexo.html');
+      result[0].data.should.include('/lorem/classes/Hexo.html');
+      expect(result[0].data).to.not.include(hexo.config.url);
     });
 
     it('external path', () => {
@@ -216,7 +220,8 @@ describe('hexo-generator-alias', () => {
       result.content.should.include('<meta http-equiv="refresh" content="0; url=' + target + '">');
     });
 
-    it('should output absolute url', async () => {
+    //it('should output absolute url', async () => {
+    it('should output url', async () => {
       const target = '/bar/';
       const post = await Post.insert({
         source: 'foo',
@@ -225,7 +230,8 @@ describe('hexo-generator-alias', () => {
       });
 
       const result = r(post);
-      result.content.should.include('<meta http-equiv="refresh" content="0; url=' + full_url_for.call(hexo, target) + '">');
+      //result.content.should.include('<meta http-equiv="refresh" content="0; url=' + full_url_for.call(hexo, target) + '">');
+      result.content.should.include('<meta http-equiv="refresh" content="0; url=' + url_for.call(hexo, target) + '">');
     });
 
     it('prioritize alias', async () => {
@@ -273,7 +279,8 @@ describe('hexo-generator-alias', () => {
       });
 
       const result = r(post);
-      result.content.should.include(full_url_for.call(hexo, 'ibnay/herut/' + filename + '/'));
+      //result.content.should.include(full_url_for.call(hexo, 'ibnay/herut/' + filename + '/'));
+      result.content.should.include(url_for.call(hexo, 'ibnay/herut/' + filename + '/'));
     });
   });
 });
